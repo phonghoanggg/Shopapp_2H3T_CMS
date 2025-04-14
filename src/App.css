@@ -1,0 +1,346 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.wrapper__content {
+    margin-left: 330px;
+    width: 100%;
+}
+
+.statis__wrapper {
+    width: 100%;
+    padding-top: 10px;
+}
+
+.statis__overview {
+    display: flex;
+    justify-content: space-between;
+}
+
+.statis__revenue {
+    width: 48%;
+    background: linear-gradient(45deg, #00ffff, #93278f);
+}
+
+.statis__product {
+    width: 48%;
+    background: linear-gradient(45deg, #ff0a6c, #4a3cdb);
+}
+
+.statis__revenue,
+.statis__product {
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 200px;
+    text-align: center;
+}
+
+.statis__title {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.statis__content {
+    display: block;
+    margin-top: 20px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.statis__productdes {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #222;
+    margin-top: 20px;
+}
+
+/* css for loader */
+.wrapper__loader {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loader,
+.loader::before,
+.loader::after {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    animation: rotate 5s linear infinite;
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-color: #5a4ff3;
+}
+
+.loader::before,
+.loader::after {
+    position: absolute;
+    content: '';
+}
+
+.loader::before {
+    border-color: #35a2d2;
+    width: 110%;
+    height: 110%;
+    animation-delay: 0.5s;
+}
+
+.loader::after {
+    border-color: #9c40fc;
+    width: 120%;
+    height: 120%;
+    animation-delay: 0.1s;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* admin order */
+
+.order__wrapper {
+    width: 100%;
+    padding-top: 10px;
+}
+
+.order__header {
+}
+/* category header */
+.categoryHeader__wrapper {
+    display: flex;
+    width: 100%;
+    background-color: rgb(240, 242, 245);
+    padding: 20px 20px 20px;
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.category-item {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 2px 12px;
+    margin-right: 10px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.category-item:hover {
+    background-color: rgba( 255, 59, 92, 0.06);
+}
+
+.category-item.active {
+    color: #ff3b5c;
+    border-color: #ff3b5c;
+}
+
+.order__content {
+    margin-top: 80px;
+    padding-left: 20px;
+}
+
+.order__content {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.order__content-title {
+    margin-bottom: 20px;
+}
+
+.orderItem {
+    display: block;
+    background-color: rgb(240, 242, 245);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.orderItem:hover {
+    background-color: rgb(219, 221, 221);
+}
+
+.orderItem__status {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(22, 24, 35, 0.1);
+}
+
+.orderItem__status-des {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 1.3rem;
+}
+
+.orderItem__status--Pending .orderItem__status-icon,
+.orderItem__status--Pending .orderItem__status-des {
+    color: #0901f7;
+}
+
+.orderItem__status--Success .orderItem__status-icon,
+.orderItem__status--Success .orderItem__status-des {
+    color: #2ec516;
+}
+
+.orderItem__status--Reject .orderItem__status-icon,
+.orderItem__status--Reject .orderItem__status-des {
+    color: #ff3b5c;
+}
+
+.orderItem__des {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(22, 24, 35, 0.1);
+}
+
+.orderitem__title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 2rem;
+}
+
+.orderItem__prive {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.orderItem__price-des {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding-right: 20px;
+    color: #ff3b5c;
+}
+
+.orderdetail__wrapper {
+    padding: 10px;
+}
+
+.orderdetail__cart,
+.orderdetail__title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.orderdetail__updateStatus {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgb(240, 242, 245);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.orderdetail__des {
+    margin-top: 91px;
+}
+
+.orderdetail__updateStatus-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn__orderdetail {
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn__orderdetail.btn__pending {
+    background-color: #0901f7;
+}
+
+.btn__orderdetail.btn__success {
+    background-color: #2ec516;
+}
+
+.btn__orderdetail.btn__reject {
+    background-color: #ff3b5c;
+}
+
+.btn__orderdetail + .btn__orderdetail {
+    margin-left: 15px;
+}
+.btn__orderdetail:hover {
+    opacity: 0.8;
+}
+/* product item */
+.orderdetail__cart-title {
+    margin-bottom: 20px;
+}
+
+.productItem__wrapper {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(240, 242, 245);
+    border-radius: 10px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.productItem__img {
+    width: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.productItem__des {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.productItem__des-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.productItem__des-quantity,
+.productItem__des-size {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.productItem__price {
+    font-size: 2rem;
+    color: #ff3b5c;
+    font-weight: bold;
+}
+
+
