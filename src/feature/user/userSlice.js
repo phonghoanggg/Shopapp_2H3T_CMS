@@ -4,14 +4,14 @@ import axios from "axios";
 
 export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
   const response = await axios.get(
-    "https://ecommerce-api-mcqr.onrender.com/user"
+    "https://shopapp-2h3t-be.onrender.com/user"
   );
   return response.data;
 });
 
 export const addUser = createAsyncThunk("user/addUser", async (user) => {
   const response = await axios.post(
-    "https://ecommerce-api-mcqr.onrender.com/user",
+    "https://shopapp-2h3t-be.onrender.com/user",
     user
   );
   return response.data;
@@ -19,14 +19,14 @@ export const addUser = createAsyncThunk("user/addUser", async (user) => {
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
   const response = await axios.put(
-    `https://ecommerce-api-mcqr.onrender.com/user/${user._id}`,
+    `https://shopapp-2h3t-be.onrender.com/user/${user._id}`,
     user
   );
   return response.data;
 });
 
 export const deleteUser = createAsyncThunk("user/deleteUser", async (id) => {
-  await axios.delete(`https://ecommerce-api-mcqr.onrender.com/user/${id}`);
+  await axios.delete(`https://shopapp-2h3t-be.onrender.com/user/${id}`);
   return id;
 });
 

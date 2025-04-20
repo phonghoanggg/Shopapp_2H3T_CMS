@@ -17,7 +17,7 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://ecommerce-api-mcqr.onrender.com/auth/register",
+        "https://shopapp-2h3t-be.onrender.com/auth/register",
         userData
       );
       return response.data;
@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://ecommerce-api-mcqr.onrender.com/auth/login",
+        "https://shopapp-2h3t-be.onrender.com/auth/login",
         userData
       );
       const { data } = response;

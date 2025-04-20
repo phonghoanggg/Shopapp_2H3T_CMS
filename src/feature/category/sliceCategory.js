@@ -6,7 +6,7 @@ export const fetchCategories = createAsyncThunk(
   "category/fetchCategories",
   async () => {
     const response = await axios.get(
-      "https://ecommerce-api-mcqr.onrender.com/category"
+      "https://shopapp-2h3t-be.onrender.com/category"
     );
     return response.data;
   }
@@ -17,7 +17,7 @@ export const addCategory = createAsyncThunk(
   async ({ name, image }) => {
     // Use 'image' here instead of 'img'
     const response = await axios.post(
-      "https://ecommerce-api-mcqr.onrender.com/category",
+      "https://shopapp-2h3t-be.onrender.com/category",
       { name, image } // Send 'image' instead of 'img'
     );
     return response.data;
@@ -28,7 +28,7 @@ export const updateCategory = createAsyncThunk(
   "category/updateCategory",
   async ({ _id, name, image }) => {
     const response = await axios.put(
-      `https://ecommerce-api-mcqr.onrender.com/category/${_id}`,
+      `https://shopapp-2h3t-be.onrender.com/category/${_id}`,
       { name, image }
     );
     return response.data;
@@ -39,7 +39,7 @@ export const deleteCategory = createAsyncThunk(
   "category/deleteCategory",
   async (id) => {
     await axios.delete(
-      `https://ecommerce-api-mcqr.onrender.com/category/${id}`
+      `https://shopapp-2h3t-be.onrender.com/category/${id}`
     );
     return id;
   }

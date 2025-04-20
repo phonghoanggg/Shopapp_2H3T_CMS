@@ -5,7 +5,7 @@ export const getOrderByStatus = createAsyncThunk(
   "order/filter",
   async (status) => {
     const response = await axios.get(
-      "https://ecommerce-api-mcqr.onrender.com/order/filterOrderByStatus?status=" +
+      "https://shopapp-2h3t-be.onrender.com/order/filterOrderByStatus?status=" +
         status
     );
     return response.data;
@@ -14,7 +14,7 @@ export const getOrderByStatus = createAsyncThunk(
 
 export const getOrderDetailById = createAsyncThunk("order/:id", async (id) => {
   const response = await axios.get(
-    "https://ecommerce-api-mcqr.onrender.com/order/" + id
+    "https://shopapp-2h3t-be.onrender.com/order/" + id
   );
   return response.data;
 });
@@ -23,7 +23,7 @@ export const updateStatus = createAsyncThunk(
   "order/updateStatus",
   async ({ id, status }) => {
     const response = await axios.put(
-      `https://ecommerce-api-mcqr.onrender.com/order/updateStatusorder`,
+      `https://shopapp-2h3t-be.onrender.com/order/updateStatusorder`,
       { id, status }
     );
     return response.data; // Ensure this returns the updated order data

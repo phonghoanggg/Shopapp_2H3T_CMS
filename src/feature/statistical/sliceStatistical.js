@@ -5,7 +5,7 @@ export const revenueStatistics = createAsyncThunk(
   "statistical/revenueStatistics",
   async () => {
     const response = await axios.get(
-      "https://ecommerce-api-mcqr.onrender.com/order/revenueStatistics"
+      "https://shopapp-2h3t-be.onrender.com/order/revenueStatistics"
     );
     return response.data;
   }
@@ -15,7 +15,7 @@ export const soldProductsStatistics = createAsyncThunk(
   "statistical/soldProductsStatistics",
   async () => {
     const response = await axios.get(
-      "https://ecommerce-api-mcqr.onrender.com/order/soldProductsStatistics"
+      "https://shopapp-2h3t-be.onrender.com/order/soldProductsStatistics"
     );
     return response.data;
   }
@@ -25,7 +25,7 @@ export const soldProductsStatisticsById = createAsyncThunk(
   "statistical/soldProductsStatisticsById",
   async () => {
     const response = await axios.get(
-      "https://ecommerce-api-mcqr.onrender.com/order/soldProductsStatisticsById"
+      "https://shopapp-2h3t-be.onrender.com/order/soldProductsStatisticsById"
     );
     return response.data;
   }

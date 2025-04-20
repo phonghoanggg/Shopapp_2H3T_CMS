@@ -6,7 +6,7 @@ export const fetchproducts = createAsyncThunk(
   "product/fetchProducts",
   async ({ page, limit }) => {
     const response = await axios.get(
-      `https://ecommerce-api-mcqr.onrender.com/product?page=${page}&limit=${limit}`
+      `https://shopapp-2h3t-be.onrender.com/product?page=${page}&limit=${limit}`
     );
     return response.data;
   }
@@ -16,7 +16,7 @@ export const addproduct = createAsyncThunk(
   "product/addproduct",
   async (product) => {
     const response = await axios.post(
-      "https://ecommerce-api-mcqr.onrender.com/product",
+      "https://shopapp-2h3t-be.onrender.com/product",
       product
     );
     return response.data;
@@ -27,7 +27,7 @@ export const updateproduct = createAsyncThunk(
   "product/updateproduct",
   async (product) => {
     const response = await axios.put(
-      `https://ecommerce-api-mcqr.onrender.com/product/${product._id}`,
+      `https://shopapp-2h3t-be.onrender.com/product/${product._id}`,
       product
     );
     return response.data;
@@ -37,7 +37,7 @@ export const updateproduct = createAsyncThunk(
 export const deleteproduct = createAsyncThunk(
   "product/deleteproduct",
   async (id) => {
-    await axios.delete(`https://ecommerce-api-mcqr.onrender.com/product/${id}`);
+    await axios.delete(`https://shopapp-2h3t-be.onrender.com/product/${id}`);
     return id;
   }
 );
