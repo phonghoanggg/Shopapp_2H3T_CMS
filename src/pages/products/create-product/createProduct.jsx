@@ -32,6 +32,7 @@ const CreateProduct = () => {
   const onSubmit = (data) => {
     const formData = {
       ...data,
+      images: data.images.split(",").map((url) => url.trim()),
       size: ["S", "M", "L", "XL"],
     };
     dispatch(addproduct(formData));
@@ -102,11 +103,17 @@ const CreateProduct = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Image URL"
+              label="Image URLs (comma separated)"
               fullWidth
-              {...register("images", { required: "Image URL is required" })}
-              error={!!errors.image}
-              helperText={errors.image?.message}
+              {...register("images", {
+                required: "At least one Image URL is required",
+                validate: (value) => {
+                  const urls = value.split(",").map((url) => url.trim());
+                  return urls.every((url) => url.startsWith("http")) || "Invalid URL format";
+                },
+              })}
+              error={!!errors.images}
+              helperText={errors.images?.message}
             />
           </Grid>
           <Grid item xs={6}>

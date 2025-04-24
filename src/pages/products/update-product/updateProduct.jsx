@@ -36,7 +36,7 @@ const UpdateProduct = () => {
         stock: product.stock,
         images: product.images,
         price: product.price,
-        newPrice: product.newprice,
+        newprice: product.newprice,
         category: product.category,
       });
     }
@@ -44,7 +44,7 @@ const UpdateProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, description, stock, images, price, newPrice, category } =
+    const { name, description, stock, images, price, newprice, category } =
       productInfo;
 
     if (
@@ -63,7 +63,7 @@ const UpdateProduct = () => {
       stock,
       images,
       price,
-      newPrice,
+      newprice,
       category,
     };
 
@@ -159,9 +159,9 @@ const UpdateProduct = () => {
           <input
             className="w-full p-2 border border-gray-300 rounded"
             type="number"
-            value={productInfo.newPrice}
+            value={productInfo.newprice}
             onChange={(e) =>
-              setProductInfo({ ...productInfo, newPrice: e.target.value })
+              setProductInfo({ ...productInfo, newprice: e.target.value })
             }
           />
         </div>
