@@ -40,7 +40,8 @@ const Product = () => {
     { field: "name", headerName: "Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
     { field: "price", headerName: "Price", flex: 1 },
-    { field: "newPrice", headerName: "New Price", flex: 1 },
+    { field: "discount", headerName: "Discount", flex: 1 },
+    { field: "newprice", headerName: "Newprice", flex: 1 },
     { field: "category", headerName: "Category", flex: 1 },
     {
       field: "images",
@@ -97,7 +98,7 @@ const Product = () => {
       ),
     },
   ];
-
+  console.log("products",products)
   const rows =
     products && Array.isArray(products)
       ? products.map((product) => ({
@@ -105,7 +106,8 @@ const Product = () => {
           name: product.name,
           description: product.description,
           price: product.price,
-          newPrice: product.newprice,
+          discount: `${(product.discount ? product.discount : 0) * 100}%`,
+          newprice: product.discount ? ((product.price - (product.price*product.discount))) : product.price,
           category: product.category,
           images: product.images,
           stock: product.stock,

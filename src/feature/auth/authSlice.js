@@ -1,7 +1,7 @@
 // src/features/authSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../api/axiosInstance";
 
 const initialState = {
   isAuthenticated: false,
@@ -12,14 +12,12 @@ const initialState = {
   error: null,
 };
 
+// Đăng ký tài khoản
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "https://shopapp-2h3t-be.onrender.com/auth/register",
-        userData
-      );
+      const response = await api.post("/auth/register", userData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -27,17 +25,13 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// Đăng nhập
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "https://shopapp-2h3t-be.onrender.com/auth/login",
-        userData
-      );
-      const { data } = response;
-
-      return data;
+      const response = await api.post("/auth/login", userData);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

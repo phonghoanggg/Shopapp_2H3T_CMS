@@ -1,45 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../api/axiosInstance";
 
+// Revenue Statistics
 export const revenueStatistics = createAsyncThunk(
   "statistical/revenueStatistics",
   async () => {
-    const response = await axios.get(
-      "https://shopapp-2h3t-be.onrender.com/order/revenueStatistics"
-    );
+    const response = await api.get("/order/revenueStatistics");
     return response.data;
   }
 );
 
+// Sold Products Statistics
 export const soldProductsStatistics = createAsyncThunk(
   "statistical/soldProductsStatistics",
   async () => {
-    const response = await axios.get(
-      "https://shopapp-2h3t-be.onrender.com/order/soldProductsStatistics"
-    );
+    const response = await api.get("/order/soldProductsStatistics");
     return response.data;
   }
 );
 
+// Sold Products Statistics By Id
 export const soldProductsStatisticsById = createAsyncThunk(
   "statistical/soldProductsStatisticsById",
   async () => {
-    const response = await axios.get(
-      "https://shopapp-2h3t-be.onrender.com/order/soldProductsStatisticsById"
-    );
+    const response = await api.get("/order/soldProductsStatisticsById");
     return response.data;
   }
 );
 
+// Sold Products By Month And Year
 export const soldProductsByMonthAndYear = createAsyncThunk(
   "statistical/soldProductsByMonthAndYear",
   async () => {
-    const response = await axios.get(
-      " http://localhost:5000/oder/soldProductsByMonthAndYear"
-    );
+    const response = await api.get("/order/soldProductsByMonthAndYear");
     return response.data;
   }
 );
+
 
 const statisticalSlice = createSlice({
     name: "statistical",

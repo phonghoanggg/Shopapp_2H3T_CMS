@@ -1,47 +1,42 @@
 // src/redux/categorySlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../api/axiosInstance";
 
+// Fetch Products
 export const fetchproducts = createAsyncThunk(
   "product/fetchProducts",
   async ({ page, limit }) => {
-    const response = await axios.get(
-      `https://shopapp-2h3t-be.onrender.com/product?page=${page}&limit=${limit}`
-    );
+    const response = await api.get(`/product?page=${page}&limit=${limit}`);
     return response.data;
   }
 );
 
+// Add Product
 export const addproduct = createAsyncThunk(
   "product/addproduct",
   async (product) => {
-    const response = await axios.post(
-      "https://shopapp-2h3t-be.onrender.com/product",
-      product
-    );
+    const response = await api.post("/product", product);
     return response.data;
   }
 );
 
+// Update Product
 export const updateproduct = createAsyncThunk(
   "product/updateproduct",
   async (product) => {
-    const response = await axios.put(
-      `https://shopapp-2h3t-be.onrender.com/product/${product._id}`,
-      product
-    );
+    const response = await api.put(`/product/${product._id}`, product);
     return response.data;
   }
 );
 
+// Delete Product
 export const deleteproduct = createAsyncThunk(
   "product/deleteproduct",
   async (id) => {
-    await axios.delete(`https://shopapp-2h3t-be.onrender.com/product/${id}`);
+    await api.delete(`/product/${id}`);
     return id;
   }
 );
-
 const productSlice = createSlice({
   name: "product",
   initialState: {

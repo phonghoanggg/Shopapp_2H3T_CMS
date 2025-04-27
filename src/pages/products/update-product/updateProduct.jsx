@@ -5,13 +5,17 @@ import {
   fetchCategories,
   selectCategories,
 } from "../../../feature/category/sliceCategory";
-import { useParams } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { arrDiscount } from "../constant";
+import { useSnackbarAlert } from "../../../components/Notification/useSnackbarAlert";
+// import { Alert } from "@mui/material";
 const UpdateProduct = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { showSnackbar, SnackbarAlert } = useSnackbarAlert();
+  const navigate = useNavigate();
   const product = useSelector((state) =>
-    state.product.products.products.find((prod) => prod._id === id)
+    state.product.products.products?.find((prod) => prod._id === id)
   );
   const categories = useSelector(selectCategories);
 
@@ -23,6 +27,7 @@ const UpdateProduct = () => {
     description: "",
     stock: 0,
     images: "",
+    discount: 0,
     price: 0,
     newprice: 0,
     category: "",
@@ -36,17 +41,16 @@ const UpdateProduct = () => {
         stock: product.stock,
         images: product.images,
         price: product.price,
+        discount: product.discount,
         newprice: product.newprice,
         category: product.category,
       });
     }
   }, [product]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    const { name, description, stock, images, price, newprice, category } =
-      productInfo;
-
+    const { name, description, stock, images, price, discount, category } = productInfo;
     if (
       name.trim() === "" ||
       description.trim() === "" ||
@@ -55,7 +59,7 @@ const UpdateProduct = () => {
     ) {
       return;
     }
-
+    const newprice = price - (price*discount)
     const updatedProduct = {
       _id: id,
       name,
@@ -63,15 +67,19 @@ const UpdateProduct = () => {
       stock,
       images,
       price,
+      discount,
       newprice,
       category,
     };
-
-    console.log(updatedProduct);
-
-    dispatch(updateproduct(updatedProduct)).then(() => {
-      alert("Product updated successfully!");
-    });
+    try {
+      await dispatch(updateproduct(updatedProduct))
+      showSnackbar('Cập nhật thành công!', 'success');
+      setTimeout(() => {
+        navigate('/product');
+      }, 1000);
+    } catch (error) {
+      showSnackbar('Cập nhật thất bại!', 'error');
+    }
   };
 
   if (!product) {
@@ -109,7 +117,6 @@ const UpdateProduct = () => {
             }
           />
         </div>
-
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-gray-700">
             Stock
@@ -123,7 +130,6 @@ const UpdateProduct = () => {
             }
           />
         </div>
-
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-gray-700">
             Image URL
@@ -137,7 +143,6 @@ const UpdateProduct = () => {
             }
           />
         </div>
-
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-gray-700">
             Price
@@ -151,42 +156,54 @@ const UpdateProduct = () => {
             }
           />
         </div>
-
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-gray-700">
-            New Price
+            Discount
           </label>
-          <input
+          <select
             className="w-full p-2 border border-gray-300 rounded"
-            type="number"
-            value={productInfo.newprice}
+            value={productInfo.discount ?? 0}
             onChange={(e) =>
-              setProductInfo({ ...productInfo, newprice: e.target.value })
+              setProductInfo({ ...productInfo, discount: Number(e.target.value) })
             }
-          />
+          >
+            <option value={0}>0%</option>
+            {arrDiscount.map((discount, index) => (
+              <option key={index} value={discount.value}>
+                {discount.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2 font-semibold text-gray-700">
+            Category
+          </label>
+          <select
+            className="w-full p-2 border border-gray-300 rounded"
+            value={productInfo.category}
+            onChange={(e) =>
+              setProductInfo({ ...productInfo, category: e.target.value })
+            }
+          >
+            {categories?.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <select
-          className="w-full p-2 border border-gray-300 rounded"
-          value={productInfo.category}
-          onChange={(e) =>
-            setProductInfo({ ...productInfo, category: e.target.value })
-          }
-        >
-          {categories?.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-
-        <button
-          className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-          type="submit"
-        >
-          Update Product
-        </button>
+        <div className="pt-5">
+          <button
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            type="submit"
+          >
+            Update Product
+          </button>
+        </div>
       </form>
+     <SnackbarAlert/>
     </div>
   );
 };

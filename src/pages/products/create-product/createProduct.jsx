@@ -15,6 +15,7 @@ import {
   selectCategories,
 } from "../../../feature/category/sliceCategory";
 import { addproduct } from "../../../feature/product/productSlice";
+import { arrDiscount } from "../constant";
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
@@ -40,7 +41,7 @@ const CreateProduct = () => {
   };
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" gutterBottom>
+      <Typography  className="pt-5" variant="h4" gutterBottom>
         Create Product
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,16 +74,6 @@ const CreateProduct = () => {
               {...register("price", { required: "Price is required" })}
               error={!!errors.price}
               helperText={errors.price?.message}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="New Price"
-              fullWidth
-              type="number"
-              {...register("newprice", { required: "New price is required" })}
-              error={!!errors.newPrice}
-              helperText={errors.newPrice?.message}
             />
           </Grid>
           <Grid item xs={6}>
@@ -126,7 +117,24 @@ const CreateProduct = () => {
               helperText={errors.stock?.message}
             />
           </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Discount"
+              fullWidth
+              select
+              {...register("discount", { required: "Discount is required" })}
+              error={!!errors.discount}
+              helperText={errors.discount?.message}
+            >
+              {arrDiscount?.map((discount, index) => (
+                <MenuItem key={index} value={discount.value}>
+                  {discount.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
         </Grid>
+        <div className="pt-5">
         <Button
           type="submit"
           variant="contained"
@@ -135,6 +143,7 @@ const CreateProduct = () => {
         >
           Create Product
         </Button>
+        </div>
       </form>
     </Container>
   );

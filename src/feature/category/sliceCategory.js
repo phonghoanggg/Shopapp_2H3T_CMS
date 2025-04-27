@@ -1,50 +1,42 @@
 // src/redux/categorySlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../api/axiosInstance";
 
+// Lấy danh sách category
 export const fetchCategories = createAsyncThunk(
   "category/fetchCategories",
   async () => {
-    const response = await axios.get(
-      "https://shopapp-2h3t-be.onrender.com/category"
-    );
+    const response = await api.get("/category");
     return response.data;
   }
 );
 
+// Thêm mới category
 export const addCategory = createAsyncThunk(
   "category/addCategory",
   async ({ name, image }) => {
-    // Use 'image' here instead of 'img'
-    const response = await axios.post(
-      "https://shopapp-2h3t-be.onrender.com/category",
-      { name, image } // Send 'image' instead of 'img'
-    );
+    const response = await api.post("/category", { name, image });
     return response.data;
   }
 );
 
+// Cập nhật category
 export const updateCategory = createAsyncThunk(
   "category/updateCategory",
   async ({ _id, name, image }) => {
-    const response = await axios.put(
-      `https://shopapp-2h3t-be.onrender.com/category/${_id}`,
-      { name, image }
-    );
+    const response = await api.put(`/category/${_id}`, { name, image });
     return response.data;
   }
 );
 
+// Xóa category
 export const deleteCategory = createAsyncThunk(
   "category/deleteCategory",
   async (id) => {
-    await axios.delete(
-      `https://shopapp-2h3t-be.onrender.com/category/${id}`
-    );
+    await api.delete(`/category/${id}`);
     return id;
   }
 );
-
 const categorySlice = createSlice({
   name: "category",
   initialState: {

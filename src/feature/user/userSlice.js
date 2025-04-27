@@ -1,35 +1,30 @@
 // src/redux/userSlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../api/axiosInstance";
 
+// Fetch Users
 export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
-  const response = await axios.get(
-    "https://shopapp-2h3t-be.onrender.com/user"
-  );
+  const response = await api.get("/user");
   return response.data;
 });
 
+// Add User
 export const addUser = createAsyncThunk("user/addUser", async (user) => {
-  const response = await axios.post(
-    "https://shopapp-2h3t-be.onrender.com/user",
-    user
-  );
+  const response = await api.post("/user", user);
   return response.data;
 });
 
+// Update User
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
-  const response = await axios.put(
-    `https://shopapp-2h3t-be.onrender.com/user/${user._id}`,
-    user
-  );
+  const response = await api.put(`/user/${user._id}`, user);
   return response.data;
 });
 
+// Delete User
 export const deleteUser = createAsyncThunk("user/deleteUser", async (id) => {
-  await axios.delete(`https://shopapp-2h3t-be.onrender.com/user/${id}`);
+  await api.delete(`/user/${id}`);
   return id;
 });
-
 const userSlice = createSlice({
   name: "user",
   initialState: {

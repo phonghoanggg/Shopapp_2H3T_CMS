@@ -1,32 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
+import api from "../../api/axiosInstance";
+// Lọc đơn hàng theo status
 export const getOrderByStatus = createAsyncThunk(
   "order/filter",
   async (status) => {
-    const response = await axios.get(
-      "https://shopapp-2h3t-be.onrender.com/order/filterOrderByStatus?status=" +
-        status
-    );
+    const response = await api.get(`/order/filterOrderByStatus?status=${status}`);
     return response.data;
   }
 );
 
-export const getOrderDetailById = createAsyncThunk("order/:id", async (id) => {
-  const response = await axios.get(
-    "https://shopapp-2h3t-be.onrender.com/order/" + id
-  );
-  return response.data;
-});
+// Lấy chi tiết đơn hàng theo id
+export const getOrderDetailById = createAsyncThunk(
+  "order/getOrderDetailById",
+  async (id) => {
+    const response = await api.get(`/order/${id}`);
+    return response.data;
+  }
+);
 
+// Cập nhật trạng thái đơn hàng
 export const updateStatus = createAsyncThunk(
   "order/updateStatus",
   async ({ id, status }) => {
-    const response = await axios.put(
-      `https://shopapp-2h3t-be.onrender.com/order/updateStatusorder`,
-      { id, status }
-    );
-    return response.data; // Ensure this returns the updated order data
+    const response = await api.put(`/order/updateStatusorder`, { id, status });
+    return response.data;
   }
 );
 
