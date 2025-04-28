@@ -16,6 +16,7 @@ import {
 } from "../../../feature/category/sliceCategory";
 import { addproduct } from "../../../feature/product/productSlice";
 import { arrDiscount } from "../constant";
+import ImageUploader from "../../../components/uploadImage/ImageUploader";
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
@@ -145,6 +146,7 @@ const CreateProduct = () => {
         </Button>
         </div>
       </form>
+      <ImageUploader/>
     </Container>
   );
 };
