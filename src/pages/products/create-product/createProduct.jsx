@@ -19,11 +19,15 @@ import { arrDiscount } from "../constant";
 import ImageUploader from "../../../components/uploadImage/ImageUploader";
 import { selectImages, selectLoading } from "../../../feature/image/imageSlice";
 import BlockUI from "../../../components/Loader/BlockUI";
+import { useSnackbarAlert } from "../../../components/Notification/useSnackbarAlert";
+import { useNavigate } from "react-router-dom";
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
   const imagesLocal = useSelector(selectImages);
   const loading = useSelector(selectLoading);
+  const { showSnackbar, SnackbarAlert } = useSnackbarAlert();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -42,18 +46,19 @@ const CreateProduct = () => {
       ...imagesFromData,
       ...imagesLocal.map((image) => ({
         "url": image.url,
-        "publicId": image.publicId || null, // Đảm bảo publicId là tùy chọn
+        "publicId": image.publicId || null,
       })),
     ]
-    console.log("images3333",images)
     const formData = {
       ...data,
       images,
       size: ["S", "M", "L", "XL"],
     };
-    console.log("formData111",formData)
     dispatch(addproduct(formData));
-    console.log(formData);
+    showSnackbar('Cập nhật thành công!', 'success');
+    setTimeout(() => {
+      navigate('/product');
+    }, 1000);
   };
   return (
     <BlockUI blocking={loading} >
@@ -109,10 +114,12 @@ const CreateProduct = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
                 label="Image URLs (comma separated)"
                 fullWidth
+                multiline
+                rows={4}
                 {...register("images", {
                   required: "At least one Image URL is required",
                   validate: (value) => {
@@ -163,6 +170,7 @@ const CreateProduct = () => {
             </Button>
           </div>
         </form>
+        <SnackbarAlert/>
       </Container>
     </BlockUI>
   );

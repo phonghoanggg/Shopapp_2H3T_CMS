@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ImageList, ImageListItem, IconButton, Snackbar, Alert } from '@mui/material';
+import { Button, ImageList, ImageListItem, IconButton, Snackbar, Alert, Dialog, DialogContent, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { addImages, deleteImage } from '../../feature/image/imageSlice';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const ImageUploader = (pros) => {
   const dispatch = useDispatch();
   console.log("pros", pros.imageUrlArr)
-  // const imagesFromRedux = useSelector(selectImages);
   const [images, setImages] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  // preview image
+  const [open, setOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Khi pros.imageUrlArr thay đổi thì cập nhật vào state images
   useEffect(() => {
@@ -50,7 +54,26 @@ const ImageUploader = (pros) => {
       setSnackbar({ open: true, message: 'Xoá ảnh thất bại!', severity: 'error' });
     }
   };
+   // Hàm mở dialog và hiển thị ảnh
+   const handlePreview = (index) => {
+    setCurrentIndex(index);
+    setOpen(true);
+  };
 
+  // Hàm đóng dialog
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // Chuyển sang ảnh trước
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  // Chuyển sang ảnh tiếp theo
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
   return (
     <div className='pt-5'>
       <Button variant="contained" component="label">
@@ -59,12 +82,20 @@ const ImageUploader = (pros) => {
       </Button>
 
       <ImageList cols={3} rowHeight={160} sx={{ mt: 2 }}>
-        {images.map((img) => (
-          <ImageListItem key={img.publicId}>
-            <img src={img.url} alt={img.publicId} loading="lazy" />
+        {images.map((img, index) => (
+          <ImageListItem key={img.publicId} onClick={() => handlePreview(index)}>
+            <img
+              src={img.url}
+              alt={img.publicId}
+              loading="lazy"
+              style={{ cursor: "pointer" }}
+            />
             <IconButton
-              sx={{ position: 'absolute', top: 5, right: 5, bgcolor: 'white' }}
-              onClick={() => handleDelete(img.publicId)}
+              sx={{ position: "absolute", top: 5, right: 5, bgcolor: "white" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete(img.publicId);
+              }}
               size="small"
             >
               <DeleteIcon fontSize="small" />
@@ -73,6 +104,34 @@ const ImageUploader = (pros) => {
         ))}
       </ImageList>
 
+      {/* Dialog hiển thị ảnh với hiệu ứng slide */}
+      <Dialog open={open} onClose={handleClose} maxWidth="lg">
+        <DialogContent sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {/* Nút quay lại */}
+          <Button onClick={handlePrev} sx={{ position: "absolute", left: 10 }}>
+            <ArrowBackIosIcon />
+          </Button>
+
+          {/* Hình ảnh */}
+          <Box>
+            <img
+              src={images[currentIndex]?.url}
+              alt={images[currentIndex]?.publicId}
+              style={{
+                width: "100%",
+                height: "auto",
+                maxWidth: "600px",
+                transition: "transform 0.3s ease-in-out", // Hiệu ứng chuyển đổi
+              }}
+            />
+          </Box>
+
+          {/* Nút tiếp theo */}
+          <Button onClick={handleNext} sx={{ position: "absolute", right: 10 }}>
+            <ArrowForwardIosIcon/>
+          </Button>
+        </DialogContent>
+      </Dialog>
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}

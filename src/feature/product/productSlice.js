@@ -42,6 +42,7 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
+    totalProducts: 0,
     loading: false,
     error: null,
   },
@@ -55,6 +56,7 @@ const productSlice = createSlice({
       .addCase(fetchproducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
+        state.totalProducts = action.payload.length;
       })
       .addCase(fetchproducts.rejected, (state, action) => {
         state.loading = false;
@@ -62,6 +64,7 @@ const productSlice = createSlice({
       })
       .addCase(addproduct.fulfilled, (state, action) => {
         state.products.push(action.payload);
+        state.totalProducts += 1;
       })
       .addCase(updateproduct.fulfilled, (state, action) => {
         const index = state.products.products.findIndex(
@@ -72,6 +75,7 @@ const productSlice = createSlice({
         }
       })
       .addCase(deleteproduct.fulfilled, (state, action) => {
+        console.log("33333",state.products.products,action.payload)
         state.products = state.products.products.filter(
           (product) => product._id !== action.payload
         );
@@ -80,5 +84,6 @@ const productSlice = createSlice({
 });
 
 export const selectproducts = (state) => state.product.products.products;
+export const selectTotalProducts = (state) => state.product.products.totalProducts;
 
 export default productSlice.reducer;

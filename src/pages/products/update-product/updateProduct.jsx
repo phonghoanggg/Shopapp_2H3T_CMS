@@ -74,8 +74,6 @@ const UpdateProduct = () => {
     ) {
       return;
     }
-    console.log("productInfo111",productInfo)
-
     const images = [
       ...productInfo.imagesOnline,
       ...productInfo.imagesLocal
@@ -289,7 +287,6 @@ const UpdateProduct = () => {
           confirmText="YES"
           cancelText="NO"
         />
-
       </div>
     </BlockUI>
   );

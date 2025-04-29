@@ -1,6 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import { DataGrid } from "@mui/x-data-grid";
@@ -11,32 +10,42 @@ import {
   deleteproduct,
   fetchproducts,
   selectproducts,
+  selectTotalProducts,
 } from "../../feature/product/productSlice";
 import BlockUI from "../../components/Loader/BlockUI";
+import ConfirmDialog from "../../components/Modal/ModalConfirm";
+import { IconButton, Typography } from "@mui/material";
+import { selectCategories } from "../../feature/category/sliceCategory";
 // import BlockUI from "../../components/Loader/BlockUI";
 
 const Product = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectproducts);
+  const totalProducts = useSelector(selectTotalProducts);
+  const categories = useSelector(selectCategories);
+  
   const loading = useSelector((state) => state.product.loading);
   const [page, setPage] = useState(1);
-  const pageSize = 10; // Set the page size
-
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
+  const pageSize = 10;
+  const handleOpenConfirm = (index) => {
+    setDeleteIndex(index);
+    setOpenConfirm(true);
+  };
+  
   useEffect(() => {
     dispatch(fetchproducts({ page, limit: pageSize }));
   }, [dispatch, page]);
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      await dispatch(deleteproduct(id));
-      dispatch(fetchproducts({ page, limit: pageSize }));
-    }
-  };
+  const handleConfirmDelete = async() => { 
+    await dispatch(deleteproduct(deleteIndex));
+    dispatch(fetchproducts({ page, limit: pageSize }));
+  }
 
   if (loading) {
     return <BlockUI blocking={loading} />;
   }
-  console.log("products4444",products)
   const columns = [
     { field: "name", headerName: "Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
@@ -55,7 +64,7 @@ const Product = () => {
               key={index}
               src={image}
               alt={`Image ${index}`}
-              style={{ width: "50px", height: "50px", marginRight: "5px" }}
+              style={{ width: "50px", height: "50px", minWidth:"50px", marginRight: "5px", objectFit:"cover", borderRadius:"4px"}}
             />
           ))}
         </div>
@@ -63,37 +72,24 @@ const Product = () => {
     },
     { field: "stock", headerName: "Stock", flex: 1 },
     {
-      field: "actions",
-      headerName: "Actions",
+      field: "Actions",
       flex: 1,
       renderCell: (params) => (
         <Grid container spacing={1}>
           <Grid item>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => handleDelete(params.id)}
-              sx={{
-                padding: "6px",
-                minWidth: "0",
-              }}
+            <IconButton
+              onClick={() => handleOpenConfirm(params.id)}
             >
               <DeleteIcon fontSize="small" />
-            </Button>
+            </IconButton>
           </Grid>
           <Grid item>
-            <Button
+            <IconButton
               component={Link}
               to={`/product/update/${params.id}`}
-              variant="outlined"
-              color="primary"
-              sx={{
-                padding: "6px",
-                minWidth: "0",
-              }}
             >
               <EditIcon fontSize="small" />
-            </Button>
+            </IconButton>
           </Grid>
         </Grid>
       ),
@@ -108,7 +104,7 @@ const Product = () => {
           price: product.price,
           discount: `${(product.discount ? product.discount : 0) * 100}%`,
           newprice: product.discount ? ((product.price - (product.price*product.discount))) : product.price,
-          category: product.category,
+          category: categories?.find((item) => item._id === product.category)?.name,
           images: product.images.map((item) => item.url) ,
           stock: product.stock,
         }))
@@ -117,22 +113,29 @@ const Product = () => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-
+  console.log("products1111",products,categories)
   return (
-      <div
+     <div className="w-full flex justify-center">
+       <div
         style={{
           marginTop: "80px",
-          height: 400,
-          width: "100%",
+          height: "100%",
+          width: "98%",
         }}
       >
+        <Typography className="pt-5" variant="h4" gutterBottom>
+          List Product
+        </Typography>
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={pageSize}
-          checkboxSelection
           pagination
-          paginationMode="server"
+          sx={{
+            "& .MuiTablePagination-root": {
+              display: "none",
+            },
+          }}
         />
         <Pagination
           style={{
@@ -140,13 +143,24 @@ const Product = () => {
             justifyContent: "center",
             alignItems: "center",
           }}
-          count={8}
+          count={Math.ceil(totalProducts / pageSize)}
           page={page}
           onChange={handlePageChange}
           color="primary"
           sx={{ marginTop: 2 }}
         />
+      <ConfirmDialog
+        open={openConfirm}
+        title="Confirmation of product deletion"
+        message="Are you sure you want to delete this product ?"
+        onCancel={() => setOpenConfirm(false)}
+        onConfirm={handleConfirmDelete}
+        confirmText="YES"
+        cancelText="NO"
+      />
       </div>
+     </div>
+      
   );
 };
 
