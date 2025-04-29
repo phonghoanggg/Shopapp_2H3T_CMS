@@ -5,6 +5,7 @@ import productReducer from "../feature/product/productSlice";
 import authReducer from "../feature/product/productSlice";
 import userReducer from "../feature/user/userSlice";
 import orderReducer from "../feature/order/sliceOrder"
+import imageReducer from "../feature/image/imageSlice"
 import statisticalReduce from "../feature/statistical/sliceStatistical";
 
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
     user: userReducer,
     statistical: statisticalReduce,
     order: orderReducer,
+    image: imageReducer,
   },
 });
 

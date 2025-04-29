@@ -44,7 +44,6 @@ const Sidebar = () => {
       items: [
         { label: "List", to: "/product" },
         { label: "Create Product", to: "/product/create" },
-        { label: "Update Product", to: "/product/update" },
       ],
     },
     {

@@ -19,7 +19,7 @@ import UpdateUser from "./pages/users/update-user/updateUser";
 
 function App() {
   return (
-    <main className="flex items-start w-full max-w-[1440px] gap-10">
+    <main className="flex items-start w-full gap-10">
       <Sidebar />
       <div className="wrapper__content">
         <Routes>

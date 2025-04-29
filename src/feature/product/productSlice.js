@@ -15,6 +15,7 @@ export const fetchproducts = createAsyncThunk(
 export const addproduct = createAsyncThunk(
   "product/addproduct",
   async (product) => {
+    console.log("kêkeke",product)
     const response = await api.post("/product", product);
     return response.data;
   }

@@ -10,6 +10,7 @@ import {
   selectOrder,
   updateStatus,
 } from "../../feature/order/sliceOrder"; // Adjust import paths as needed
+import BlockUI from "../../components/Loader/BlockUI";
 
 const style = {
   position: "absolute",
@@ -62,7 +63,7 @@ const OrderDetail = () => {
   }, []);
 
   if (loading) {
-    return <Loader />;
+    return <BlockUI blocking={loading}/>;
   }
 
   if (!order.orderDetail) {

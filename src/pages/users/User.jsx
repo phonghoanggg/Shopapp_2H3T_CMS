@@ -6,12 +6,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../../components/Loader/Loader";
 import {
   deleteUser,
   fetchUsers,
   selectUsers,
 } from "../../feature/user/userSlice";
+import BlockUI from "../../components/Loader/BlockUI";
 
 const User = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const User = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <BlockUI blocking={loading}/>;
   }
 
   const columns = [

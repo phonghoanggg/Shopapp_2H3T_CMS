@@ -1,12 +1,27 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, ImageList, ImageListItem, IconButton, Snackbar, Alert } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { addImages, deleteImage } from '../../feature/image/imageSlice';
 
-const ImageUploader = () => {
+const ImageUploader = (pros) => {
+  const dispatch = useDispatch();
+  console.log("pros", pros.imageUrlArr)
+  // const imagesFromRedux = useSelector(selectImages);
   const [images, setImages] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
+  // Khi pros.imageUrlArr thay đổi thì cập nhật vào state images
+  useEffect(() => {
+    if (pros.imageUrlArr && pros.imageUrlArr.length) {
+      setImages(pros.imageUrlArr);
+    }
+  }, [pros.imageUrlArr]);
+  useEffect(() => {
+    pros.handleUpdateImageArr && pros.handleUpdateImageArr(images)
+  },[images])
+
+  // Khi upload ảnh xong, thêm ảnh vào state images
   const handleUpload = async (e) => {
     const files = e.target.files;
     if (!files.length) return;
@@ -16,34 +31,30 @@ const ImageUploader = () => {
       formData.append('images', file);
     }
 
-    try {
-      const res = await axios.post('http://localhost:5000/image/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
-      setImages((prev) => [...prev, ...res.data.data]);
+    const resultAction = await dispatch(addImages(formData));
+    if (addImages.fulfilled.match(resultAction)) {
       setSnackbar({ open: true, message: 'Upload thành công!', severity: 'success' });
-    } catch (error) {
-      console.error(error);
+      // Cập nhật state images với ảnh vừa upload
+      setImages((prev) => [...prev, ...resultAction.payload]);
+    } else {
       setSnackbar({ open: true, message: 'Upload thất bại!', severity: 'error' });
     }
   };
 
   const handleDelete = async (publicId) => {
-    try {
-      await axios.delete(`http://localhost:5000/image/delete?publicId=${publicId}`);
-      setImages((prev) => prev.filter((img) => img.publicId !== publicId));
+    const resultAction = await dispatch(deleteImage(publicId));
+    if (deleteImage.fulfilled.match(resultAction)) {
       setSnackbar({ open: true, message: 'Xoá ảnh thành công!', severity: 'success' });
-    } catch (error) {
-      console.error(error);
+      setImages((prev) => prev.filter((img) => img.publicId !== publicId));
+    } else {
       setSnackbar({ open: true, message: 'Xoá ảnh thất bại!', severity: 'error' });
     }
   };
-  console.log("images111",images)
+
   return (
     <div className='pt-5'>
       <Button variant="contained" component="label">
-        Chọn ảnh
+        Upload
         <input type="file" multiple hidden onChange={handleUpload} />
       </Button>
 
@@ -66,7 +77,7 @@ const ImageUploader = () => {
         open={snackbar.open}
         autoHideDuration={3000}
         onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
         <Alert severity={snackbar.severity} variant="filled">
           {snackbar.message}

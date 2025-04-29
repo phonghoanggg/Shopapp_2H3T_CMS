@@ -12,12 +12,12 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../../components/Loader/Loader";
 import {
   deleteCategory,
   fetchCategories,
   selectCategories,
 } from "../../feature/category/sliceCategory";
+import BlockUI from "../../components/Loader/BlockUI";
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const Category = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <BlockUI blocking={loading}/>;
   }
 
   return (

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectOrder } from "../../feature/order/sliceOrder";
 import { getOrderByStatus } from "../../feature/order/sliceOrder";
 import { useEffect } from "react";
-import Loader from "../../components/Loader/Loader";
+import BlockUI from "../../components/Loader/BlockUI";
 
 const LIST_CATEGORY = [
     {
@@ -34,7 +34,7 @@ const Order = () => {
     }, [dispatch, status]);
 
     if (loading) {
-        return <Loader />;
+        return <BlockUI blocking={loading}/>;
     }
 
     return (

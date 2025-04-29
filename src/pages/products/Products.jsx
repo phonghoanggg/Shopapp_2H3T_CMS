@@ -7,12 +7,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Loader from "../../components/Loader/Loader";
 import {
   deleteproduct,
   fetchproducts,
   selectproducts,
 } from "../../feature/product/productSlice";
+import BlockUI from "../../components/Loader/BlockUI";
+// import BlockUI from "../../components/Loader/BlockUI";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -33,9 +34,9 @@ const Product = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <BlockUI blocking={loading} />;
   }
-
+  console.log("products4444",products)
   const columns = [
     { field: "name", headerName: "Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
@@ -98,7 +99,6 @@ const Product = () => {
       ),
     },
   ];
-  console.log("products",products)
   const rows =
     products && Array.isArray(products)
       ? products.map((product) => ({
@@ -109,7 +109,7 @@ const Product = () => {
           discount: `${(product.discount ? product.discount : 0) * 100}%`,
           newprice: product.discount ? ((product.price - (product.price*product.discount))) : product.price,
           category: product.category,
-          images: product.images,
+          images: product.images.map((item) => item.url) ,
           stock: product.stock,
         }))
       : [];
@@ -119,34 +119,34 @@ const Product = () => {
   };
 
   return (
-    <div
-      style={{
-        marginTop: "80px",
-        height: 400,
-        width: "100%",
-      }}
-    >
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={pageSize}
-        checkboxSelection
-        pagination
-        paginationMode="server"
-      />
-      <Pagination
+      <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          marginTop: "80px",
+          height: 400,
+          width: "100%",
         }}
-        count={8}
-        page={page}
-        onChange={handlePageChange}
-        color="primary"
-        sx={{ marginTop: 2 }}
-      />
-    </div>
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={pageSize}
+          checkboxSelection
+          pagination
+          paginationMode="server"
+        />
+        <Pagination
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          count={8}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+          sx={{ marginTop: 2 }}
+        />
+      </div>
   );
 };
 

@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types
 const ProductItem = ({ data }) => {
   console.log("data", data);
 
