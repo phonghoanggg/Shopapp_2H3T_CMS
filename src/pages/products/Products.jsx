@@ -59,7 +59,7 @@ const Product = () => {
       flex: 2,
       renderCell: (params) => (
         <div style={{ display: "flex" }}>
-          {params.value.map((image, index) => (
+          {params.value?.map((image, index) => (
             <img
               key={index}
               src={image}
@@ -94,7 +94,8 @@ const Product = () => {
         </Grid>
       ),
     },
-  ];
+  ]; 
+  console.log("categories11", categories);
   const rows =
     products && Array.isArray(products)
       ? products.map((product) => ({
@@ -105,7 +106,7 @@ const Product = () => {
           discount: `${(product.discount ? product.discount : 0) * 100}%`,
           newprice: product.discount ? ((product.price - (product.price*product.discount))) : product.price,
           category: categories?.find((item) => item._id === product.category)?.name,
-          images: product.images.map((item) => item.url) ,
+          images: product.images?.map((item) => item.url) ,
           stock: product.stock,
         }))
       : [];

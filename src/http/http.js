@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create default config for http request
 const http = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://localhost:8000",
   headers: {
     "Content-Type": "application/json",
   },
