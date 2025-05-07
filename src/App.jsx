@@ -9,13 +9,13 @@ import Login from "./pages/login/Login";
 import Order from "./pages/order/order";
 import OrderDetail from "./pages/orderDetail/OrderDetail";
 import Products from "./pages/products/Products";
-import CreateProduct from "./pages/products/create-product/CreateProduct";
-import UpdateProduct from "./pages/products/update-product/UpdateProduct";
+import CreateProduct from "./pages/products/create-product/createProduct";
+import UpdateProduct from "./pages/products/update-product/updateProduct";
 import Register from "./pages/register/Register";
 import Statistical from "./pages/statistical/statistical";
 import User from "./pages/users/User";
-import CreateUser from "./pages/users/create-user/createUser";
-import UpdateUser from "./pages/users/update-user/updateUser";
+import CreateUser from "./pages/users/create-user/CreateUser";
+import UpdateUser from "./pages/users/update-user/UpdateUser";
 
 function App() {
   return (
