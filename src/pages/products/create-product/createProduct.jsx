@@ -2,7 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {
   Button,
   Container,
-  Grid,
+  // Grid,
   MenuItem,
   TextField,
   Typography,
@@ -66,9 +66,7 @@ const CreateProduct = () => {
         <Typography className="pt-5" variant="h4" gutterBottom>
           Create Product
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
               <TextField
                 label="Product Name"
                 fullWidth
@@ -76,8 +74,6 @@ const CreateProduct = () => {
                 error={!!errors.name}
                 helperText={errors.name?.message}
               />
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 label="Description"
                 fullWidth
@@ -87,8 +83,6 @@ const CreateProduct = () => {
                 error={!!errors.description}
                 helperText={errors.description?.message}
               />
-            </Grid>
-            <Grid item xs={6}>
               <TextField
                 label="Price"
                 fullWidth
@@ -97,8 +91,6 @@ const CreateProduct = () => {
                 error={!!errors.price}
                 helperText={errors.price?.message}
               />
-            </Grid>
-            <Grid item xs={6}>
               <TextField
                 label="Category"
                 fullWidth
@@ -113,8 +105,6 @@ const CreateProduct = () => {
                   </MenuItem>
                 ))}
               </TextField>
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 label="Image URLs (comma separated)"
                 fullWidth
@@ -130,8 +120,6 @@ const CreateProduct = () => {
                 error={!!errors.images}
                 helperText={errors.images?.message}
               />
-            </Grid>
-            <Grid item xs={6}>
               <TextField
                 label="Stock"
                 fullWidth
@@ -140,8 +128,6 @@ const CreateProduct = () => {
                 error={!!errors.stock}
                 helperText={errors.stock?.message}
               />
-            </Grid>
-            <Grid item xs={6}>
               <TextField
                 label="Discount"
                 fullWidth
@@ -156,8 +142,6 @@ const CreateProduct = () => {
                   </MenuItem>
                 ))}
               </TextField>
-            </Grid>
-          </Grid>
           <ImageUploader />
           <div className="pt-5">
             <Button

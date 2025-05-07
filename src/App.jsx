@@ -3,7 +3,7 @@ import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import Category from "./pages/categorys/Category";
 import CreateCategory from "./pages/categorys/create-category/CreateCategory";
-import UpdateCategory from "./pages/categorys/update-category/updateCategory";
+import UpdateCategory from './pages/categorys/update-category/UpdateCategory';
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Order from "./pages/order/order";
